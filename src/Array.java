@@ -1,18 +1,24 @@
-public class Matrix {
+import java.util.Scanner;
+
+public class Array {
     private int[] mass;
     private int[] defaultMass;
 
-    public Matrix() {
-        this.defaultMass = new int[]{12, 12, 12, 12, 12};
-        this.mass = this.defaultMass;
+    public Array() {
+        defaultMass = new int[]{12, 13, 14, 15, 16};
+        mass = new int[5];
+
+        for (int i = 0; i < defaultMass.length; i++ ){
+            mass[i] = defaultMass[i];
+        }
     }
 
-    public Matrix(int[] userMatr) {
-        this.defaultMass = new int[]{12, 12, 12, 12, 12};
+    public Array(int[] userMatr) {
+        this.defaultMass = new int[]{12, 11, 10, 9, 8};
         this.mass = userMatr;
     }
 
-    public Matrix(Matrix other) {
+    public Array(Array other) {
         this(other.getmatrix());
     }
 
@@ -39,6 +45,24 @@ public class Matrix {
         }
 
         return ansStr;
+    }
+
+    public void showArr(){
+        for(int i = 0; i < mass.length; i++){
+            System.out.println(mass[i]);
+        }
+    }
+
+    public Array inputArr(int size, Array arr){
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("Введите значения вашего массива: ");
+
+        for(int i = 0; i < size; i++){
+            arr.mass[i] = Integer.parseInt(s.nextLine()); // берем значения в массив
+        }
+
+        return arr;
     }
 
 }

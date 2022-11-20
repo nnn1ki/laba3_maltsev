@@ -2,23 +2,27 @@ public class Text {
     private String text;
     private String[] words;
 
-    public Text() {
-        this.text = "Hello, world! Hello, Ann.";
-        this.words = this.text.split("\\W+");
+    public Text() { //конструктор дефолтной записи
+        text = "Hello, world! Hello, Ann.";
+        words = this.text.split("\\W+");
     }
 
-    public Text(String text) {
+    public Text(String text) { //конструктор пользовательского ввода
         this.text = text;
-        this.words = this.text.split("\\W+");
+        words = text.split("\\W+");
     }
 
-    public Text(Text other) {
+    public Text(Text other) { //типо копирование
         this(other.getText());
     }
 
-    private String getText() {
+    public String getText() {
         return this.text;
     }
+
+//    public int getLenght(){
+//        return text.length();
+//    }
 
     public int numberSentences() {
         int numderOfSentences = 0;
