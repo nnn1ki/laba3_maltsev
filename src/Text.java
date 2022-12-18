@@ -1,10 +1,21 @@
+import java.sql.Struct;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Text {
     private String text;
+    private  final String defautText = "Hello, Ann! Hello, world!"; //дефолтный текст
     private String[] words;
 
-    public Text() { //конструктор дефолтной записи
-        text = "Hello, world! Hello, Ann.";
-        words = this.text.split("\\W+");
+    //переписать функции вывода
+    //написать функцию стирания
+    //функция создания
+    //функция записи и сохранения
+
+
+    public Text() {
+        text = defautText;
+        words = text.split("\\W+");
     }
 
     public Text(String text) { //конструктор пользовательского ввода
@@ -14,17 +25,19 @@ public class Text {
 
     public Text(Text other) { //типо копирование
         this(other.getText());
-    }
+    } //клонирование
 
     public String getText() {
         return this.text;
     }
 
-//    public int getLenght(){
-//        return text.length();
-//    }
 
-    public int numberSentences() {
+    public void showText(){ //выводим наш текст
+        System.out.print(text + '\n');
+    }
+
+
+    public int numberSentences() { //блок по заданию
         int numderOfSentences = 0;
         String signsEnd = ".;!?";
 
@@ -39,7 +52,7 @@ public class Text {
         return numderOfSentences;
     }
 
-    public String popularWord() {
+    public String popularWord() { //блок по заданию
         String popWord = "";
         int maxCount = 0;
 
@@ -61,7 +74,9 @@ public class Text {
         return popWord;
     }
 
-    public void vowelOrConsonant() {
+    public int[] vowelOrConsonant() { //блок по заданию
+
+        int[] conVow = new int[2];//массив для двух значений
         String vowelLetters = "eyuioa";
         int vowInt = 0;
         int conInt = 0;
@@ -83,7 +98,10 @@ public class Text {
             }
         }
 
-        System.out.println("Количество слов с согласной = " + conInt + "\nКоличество слов с гласной = " + vowInt);
+        conVow[0] = conInt;
+        conVow[1] = vowInt;
+
+        return conVow;
     }
 
 
