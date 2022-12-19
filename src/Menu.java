@@ -18,10 +18,19 @@ public class Menu {
             temp = Integer.parseInt(readStr());
             return temp;
         }catch (NumberFormatException e ){
-            System.out.println("Вводите только значения меню!");
+            System.out.println("Вводите корректные значения!");
         }
 
         return temp;
+    }
+
+    private static int menuCheck(int num){
+        int i;
+
+        while ((i = readInt()) > num || i <= -1){
+            System.out.println("Введите корректные значения!");
+        }
+        return i;
     }
 
 
@@ -36,7 +45,7 @@ public class Menu {
             System.out.println("2/ Выполнить задание с матрицей");
             System.out.println("0/ Выйти из программы");
 
-            choice = readInt();
+            choice = menuCheck(2);
 
 
             switch (choice){
@@ -46,12 +55,12 @@ public class Menu {
                 case  2:
                     arrayMenu();
                     break;
-                case 0:
-                    System.out.println("Программа успешно завершена!");
-                    break;
+
             }
         }
         while (choice != 0);
+        System.out.println("Программа завершена!");
+        System.exit(0);
     }
 
     public static void textMenu(){ //Выполнить задание с текстом
@@ -72,7 +81,7 @@ public class Menu {
             System.out.println("7/ НАЗАД");
             System.out.println("0/ Выйти из программы");
 
-            choice = readInt();
+            choice = menuCheck(7);
 
 
                 try {
@@ -119,6 +128,8 @@ public class Menu {
                 }
         }
         while (choice != 0);
+        System.out.println("Программа завершена!");
+        System.exit(0);
     }
 
     private static void creatingTextMenu(){ //менб стоздания текста, его ввод...
@@ -132,7 +143,7 @@ public class Menu {
             System.out.println("4/ Назад");
             System.out.println("0/ ВЫХОД");
 
-            choice = readInt();
+            choice = menuCheck(4);
 
             switch (choice){
                 case 1:
@@ -156,11 +167,12 @@ public class Menu {
                 case 4:
                     textMenu();
                     break;
+
             }
 
         }while (choice != 0);
         System.out.println("Программа завершена!");
-
+        System.exit(0);
     }
 
     private static void textToFile(String nameFile) { //сохранение текста в файл
@@ -209,7 +221,7 @@ public class Menu {
             System.out.println("6/ НАЗАД");
             System.out.println("0/ Выйти из программы");
 
-            choice = readInt();
+            choice = menuCheck(6);
 
             try {
                 switch (choice){
@@ -248,7 +260,8 @@ public class Menu {
 
 
         } while (choice != 0);
-
+        System.out.println("Программа завершена!");
+        System.exit(0);
     }
 
 
@@ -266,7 +279,7 @@ public class Menu {
             System.out.println("4/ НАЗАД");
             System.out.println("0/ Выйти из программы!");
 
-            choice = Integer.parseInt(readStr());
+            choice = menuCheck(4);
 
             switch (choice){
                 case 1: //поумолчанию
@@ -277,14 +290,25 @@ public class Menu {
 
                 case 2: //свои значения
                     System.out.println("Введите колличество эллементов");
-                    int[] buffer = new int[readInt()];
 
-                    System.out.println("Введите значения вашего массива: ");
-                    for (int i = 0; i < buffer.length; i++){
-                        buffer[i] = readInt(); //вводим значения
+                    int[] buffer;
+
+                    try { //проверка отрицательности длинны массива
+                        buffer = new int[readInt()];
+
+                        System.out.println("Введите значения вашего массива: ");
+                        for (int i = 0; i < buffer.length; i++){
+                            buffer[i] = readInt(); //вводим значения
+                        }
+                        array = new Array(buffer);
+                        arrayMenu();
+
+                    }catch (NegativeArraySizeException e){
+                        System.out.println("Длина масива не может быть отрицательной!");
                     }
-                    array = new Array(buffer);
-                    arrayMenu();
+
+
+
                     break;
 
                 case 3: //прочитать значения из файла
@@ -301,6 +325,8 @@ public class Menu {
 
 
         } while (choice != 0);
+        System.out.println("Программа завершена!");
+        System.exit(0);
 
 
 
@@ -326,7 +352,7 @@ public class Menu {
         } catch (FileNotFoundException e) {
             System.out.println("Такого файла нет!");
         } catch (IOException e) {
-            System.out.println("Ошибка записи!");
+            System.out.println("Ошибка чтения!");
         }
 
         return new int[0]; //зничего не получилось и вывелся нулевой
