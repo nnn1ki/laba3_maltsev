@@ -1,14 +1,20 @@
 import java.util.Scanner;
 
 public class Array {
-    private int[] mass;
+    private int[] mass; //задан неявно
 
     private final int[] defaultMass = new int[]{11, 11, 10, 9, 8}; //дефолтный массив для задания
     private Scanner input;
 
     public Array() { //создание массива с дефолтными значениями
         //копируем наше содержание в рабочий массив
-        System.arraycopy(defaultMass, 0, mass, 0, defaultMass.length + 1);
+        //System.arraycopy(defaultMass, 0, mass, 0, defaultMass.length + 1);
+
+        mass = new int[defaultMass.length];
+
+        for(int i = 0; i < defaultMass.length; i++){
+            mass[i] = defaultMass[i];
+        }
     }
 
     public Array(int[] userArr) { //значения пользователя
@@ -19,7 +25,6 @@ public class Array {
         for(int i = 0; i < userArr.length; i++){
             mass[i] = userArr[i];
         }
-
 
         //System.arraycopy(userArr, 0, mass, 0, userArr.length + 1);
     }
@@ -33,9 +38,12 @@ public class Array {
     }
 
     public void showArr(){ //выводи массива на экран
+        String strArr = "";
         for(int i = 0; i < mass.length; i++){
-            System.out.println(mass[i]);
+            strArr += Integer.toString(mass[i]) + ' ';
         }
+
+        System.out.println(strArr);
     }
 
     public String deleteSimilar() { //блок по заданию
