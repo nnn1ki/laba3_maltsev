@@ -1,9 +1,22 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
+
+
+
+//TODO
+//если мы ломаем запись элементов в масссив, то потом массив не вводиться до конца
+//этого быть не должно
+//возможно программа не возвращяется обратно в ввод
+
+//некоректный вывод массива, говорит что нужно ввести значения меню
+
+
+
 
 public class Menu {
     private static Text text = null; //определяем наш текст
-    private static Array array = null; //определяем наш массив
+    private static Array array; //определяем наш массив
     private static Scanner input;
 
     private static String readStr(){ //читаем запись пользователя
@@ -24,11 +37,50 @@ public class Menu {
         return temp;
     }
 
+
+    public static int getInputNumber(){
+
+        boolean valid; //подходит или нет
+        String inputData; //то что мы вводим
+        int expectedOutput = 0; //то,что выводим
+
+//        do {
+//            System.out.print("Введите значение: \t");
+//            try {
+//                inputData = readStr(); //читаем потенциальное число
+//
+//                if (Integer.parseInt(inputData) > 0) {
+//                    expectedOutput = Integer.parseInt(inputData);
+//                    valid = true;
+//                } else {
+//                    System.out.println("Invalid Input!");
+//                    valid = false;
+//                }
+//            } catch (Exception ex){
+//                valid = false;
+//            }
+//        } while(!valid);
+
+
+        do {
+            System.out.print("Введите значение: \t");
+            try {
+                inputData = readStr(); //читаем потенциальное число
+                expectedOutput = Integer.parseInt(inputData);
+                valid = true;
+
+            } catch (NumberFormatException e){
+                valid = false;
+            }
+        } while(!valid);
+        return expectedOutput;
+    }
+
     private static int menuCheck(int num){
         int i;
 
         while ((i = readInt()) > num || i <= -1){
-            System.out.println("Введите корректные значения!");
+            System.out.println("Введите корректные значения для меню!");
         }
         return i;
     }
@@ -41,8 +93,8 @@ public class Menu {
         do{
             //главное меню
             System.out.println("\n-------главное меню-------");
-            System.out.println("1/ Выполить задание с текстом");
-            System.out.println("2/ Выполнить задание с матрицей");
+            System.out.println("1/ Выполнить задание с текстом");
+            System.out.println("2/ Выполнить задание с массивом");
             System.out.println("0/ Выйти из программы");
 
             choice = menuCheck(2);
@@ -118,9 +170,7 @@ public class Menu {
                             startMenu();
                             break;
 
-
                     }
-
 
                 }
                 catch (NullPointerException e) {
@@ -245,7 +295,12 @@ public class Menu {
                         break;
 
                     case 5: //показать массив
-                        array.showArr();
+                        try {
+                            array.showArr(); //на этом этапе программа не сохраняет!
+                        }catch (NullPointerException e){
+                            System.out.println("Значения массива не сохранены!");
+                        }
+
                         break;
 
                     case 6: //назад
@@ -271,43 +326,38 @@ public class Menu {
     public static void creatingArrayMenu(){
         int choice = -1;
 
+        Array array1;
+
         do{
-            System.out.println("------- Меню создания масива -------");
-            System.out.println("1/ Ввести масив поумолчанию");
-            System.out.println("2/ Ввести в масив свои значения");
-            System.out.println("3/ Прочитать масив из файла");
+            System.out.println("------- Меню создания массива -------");
+            System.out.println("1/ Ввести массив по-умолчанию");
+            System.out.println("2/ Ввести в массив свои значения");
+            System.out.println("3/ Прочитать массив из файла");
             System.out.println("4/ НАЗАД");
             System.out.println("0/ Выйти из программы!");
 
             choice = menuCheck(4);
 
             switch (choice){
-                case 1: //поумолчанию
+                case 1: //по-умолчанию
                     array = new Array();
                     System.out.println("Дефолтные значения заданы!");
                     arrayMenu();
                     break;
 
                 case 2: //свои значения
-                    System.out.println("Введите колличество эллементов");
+                    System.out.println("Введите количество элементов");
 
-                    int[] buffer;
+                    int[] arr = new int[readInt()];
+                    int num;
 
-                    try { //проверка отрицательности длинны массива
-                        buffer = new int[readInt()];
-
+                    for(int i = 0; i < arr.length; i++){
                         System.out.println("Введите значения вашего массива: ");
-                        for (int i = 0; i < buffer.length; i++){
-                            buffer[i] = readInt(); //вводим значения
-                        }
-                        array = new Array(buffer);
-                        arrayMenu();
-
-                    }catch (NegativeArraySizeException e){
-                        System.out.println("Длина масива не может быть отрицательной!");
+                        arr[i] = getInputNumber(); //ждет ввода корректного числа
                     }
 
-
+                    array = new Array(arr);
+                    arrayMenu();
 
                     break;
 
@@ -321,15 +371,14 @@ public class Menu {
                     arrayMenu();
                     break;
 
+                default:
+                    throw new IllegalStateException("Unexpected value: " + choice);
             }
 
 
         } while (choice != 0);
         System.out.println("Программа завершена!");
         System.exit(0);
-
-
-
 
     }
 
@@ -377,9 +426,5 @@ public class Menu {
         }
 
     }
-
-
-
-
 
 }

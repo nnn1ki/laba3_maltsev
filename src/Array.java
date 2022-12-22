@@ -13,7 +13,15 @@ public class Array {
 
     public Array(int[] userArr) { //значения пользователя
         //копируем значения введенного массива в наш
-        System.arraycopy(userArr, 0, mass, 0, userArr.length + 1);
+
+        mass = new int[userArr.length];
+
+        for(int i = 0; i < userArr.length; i++){
+            mass[i] = userArr[i];
+        }
+
+
+        //System.arraycopy(userArr, 0, mass, 0, userArr.length + 1);
     }
 
     public Array(Array other) {//клонирование
@@ -53,7 +61,7 @@ public class Array {
 
     public  void clearArr(){ //обнуление всех значений
         for (int i : mass){
-            i = 0;
+            mass[i] = 0;
         }
 
     }
